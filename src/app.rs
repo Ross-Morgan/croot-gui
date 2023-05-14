@@ -1,14 +1,16 @@
 use std::fs::File;
 use std::io::prelude::*;
-use std::path::Path;
+use std::path::PathBuf;
 
 use eframe::egui;
 use egui_extras::RetainedImage;
 
+const ICON: [u8; 7660] = include_bytes!("../assets/icon.png");
+
 struct ImageApp(RetainedImage);
 
 impl ImageApp {
-    fn new(image_path: &Path) -> Self {
+    fn new(image_path: PathBuf) -> Self {
         let mut file = File::open(image_path).expect("Failed to open file");
         let mut image_bytes = Vec::new();
 
@@ -26,9 +28,14 @@ impl eframe::App for ImageApp {
     }
 }
 
-pub fn show_image(name: &str, path: &'static Path, dimensions: (u32, u32)) -> Result<(), eframe::Error> {
+pub fn show_image(name: &str, path: PathBuf, dimensions: (u32, u32)) -> Result<(), eframe::Error> {
     let options = eframe::NativeOptions {
         initial_window_size: Some(egui::vec2(dimensions.0 as f32, dimensions.1 as f32)),
+        icon_data: Some(eframe::IconData {
+            rgba: ICON.to_vec(),
+            width: 512,
+            height: 512,
+        }),
         ..Default::default()
     };
 
