@@ -5,7 +5,7 @@ use std::path::PathBuf;
 use eframe::egui;
 use egui_extras::RetainedImage;
 
-const ICON: [u8; 7660] = include_bytes!("../assets/icon.png");
+const ICON: &[u8; 7660] = include_bytes!("../assets/icon.png");
 
 struct ImageApp(RetainedImage);
 
