@@ -33,8 +33,8 @@ pub fn show_image(name: &str, path: PathBuf, dimensions: (u32, u32)) -> Result<(
         initial_window_size: Some(egui::vec2(dimensions.0 as f32, dimensions.1 as f32)),
         icon_data: Some(eframe::IconData {
             rgba: ICON.to_vec(),
-            width: 512,
-            height: 512,
+            width: 256,
+            height: 256,
         }),
         ..Default::default()
     };
