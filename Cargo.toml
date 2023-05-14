@@ -1,6 +1,6 @@
 [package]
 name = "croot-gui"
-description = ""
+description = "A Rust crate for graphing complex roots and numbers"
 version = "0.1.0"
 edition = "2021"
 license = "BSD-3-Clause"
