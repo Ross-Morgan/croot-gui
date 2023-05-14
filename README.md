@@ -31,7 +31,7 @@ let dimensions = (1000, 1000);
 // Generate the graph with the selected parameters
 generate_graph(roots, filename, dimensions).expect("Failed);
 ```
-## Display
+## Display Graph
 
 ```rust
 use croot_gui::prelude::*;
