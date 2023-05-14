@@ -640,8 +640,8 @@ dependencies = [
 
 [[package]]
 name = "croot"
-version = "0.3.1"
-source = "git+https://github.com/Ross-Morgan/croot.git#2a09c58cbb5821d249fbbc3906bc08f5eb3a5057"
+version = "0.3.2"
+source = "git+https://github.com/Ross-Morgan/croot.git#aa675d5297a844e3a4a900891b28a3bdb0a2782e"
 dependencies = [
  "num-complex",
 ]
