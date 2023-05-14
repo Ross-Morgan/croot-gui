@@ -1,38 +1,75 @@
 use num_complex::Complex64;
-use plotters::{prelude::*, coord::Shift};
+use plotters::prelude::*;
 
+pub fn generate_graph<T: AsRef<std::path::Path> + ?Sized>(roots: Vec<Complex64>, filename: &T, dimensions: (u32, u32)) -> Result<(), Box<dyn std::error::Error>> {
+    let draw_area = BitMapBackend::new(filename, dimensions).into_drawing_area();
 
-fn plot_root<'a>(chart: &'a mut DrawingArea<BitMapBackend<'a>, Shift>) {
+    let radius = roots.first().map(|c| c.norm()).expect("No roots provided");
+    let axes_range = (radius * -1.2)..(radius * 1.2);
 
-}
+    draw_area.fill(&WHITE)?;
 
-pub fn generate_graph(filename: &str, dimensions: (u32, u32)) -> Result<(), Box<dyn std::error::Error>> {
-    let root = BitMapBackend::new(filename, dimensions).into_drawing_area();
-    root.fill(&WHITE)?;
-    let mut chart = ChartBuilder::on(&root)
-        .caption("y=x^2", ("sans-serif", 50).into_font())
+    // Create chart
+    let mut chart = ChartBuilder::on(&draw_area)
+        .caption(format!("{} roots of {}", roots.len(), roots.first().copied().unwrap_or_default().powi(roots.len() as i32)), ("sans-serif", 50).into_font())
         .margin(5)
         .x_label_area_size(30)
         .y_label_area_size(30)
-        .build_cartesian_2d(-1f32..1f32, -0.1f32..1f32)?;
+        .build_cartesian_2d(axes_range.clone(), axes_range.clone())?;
 
+    // Add grid to background
     chart.configure_mesh().draw()?;
 
-    chart
-        .draw_series(LineSeries::new(
-            (-50..=50).map(|x| x as f32 / 50.0).map(|x| (x, x * x)),
-            &RED,
-        ))?;
-        .label("y = x^2")
-        .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], &RED));
+    // Draw line on y-axis
+    chart.draw_series(LineSeries::new(
+        (((radius * -1.5) as i32)..=((radius * 1.5) as i32))
+            .map(|x| x as f64)
+            .map(|y| (0.0, y)),
+        BLACK,
+    ))?;
 
-    chart
-        .configure_series_labels()
-        .background_style(&WHITE.mix(0.8))
-        .border_style(&BLACK)
-        .draw()?;
+    // Draw line on x-axis
+    chart.draw_series(LineSeries::new(
+        (((radius * -1.5) as i32)..=((radius * 1.5) as i32))
+            .map(|x| x as f64)
+            .map(|x| (x, 0.0)),
+        BLACK,
+    ))?;
 
-    root.present()?;
+    // Draw line from origin to each root
+    for root in roots.iter() {
+        chart
+            .draw_series(LineSeries::new(
+                (0..=100)
+                    .map(|x| x as f64 / 100.0)
+                    .map(|x| (x * root.re, x * root.im)),
+                BLACK.stroke_width(2),
+            ))?;
+    }
+
+    // Draw circles on each root
+    chart.draw_series(roots.iter().map(|c| Circle::new((c.re, c.im), 5, BLACK.filled())))?;
+
+    // Draw circle at origin
+    chart.plotting_area().draw(&Circle::new((0.0, 0.0), 5, BLACK.stroke_width(5).filled()))?;
+
+    // Generate graph
+    draw_area.present()?;
+
+    Ok(())
+}
+
+#[cfg(feature = "gui")]
+pub fn show_graph(roots: Vec<Complex64>, dimensions: (u32, u32)) -> Result<(), Box<dyn std::error::Error>> {
+    use std::path::PathBuf;
+
+    use crate::app::show_image;
+
+    let path: PathBuf = [".", "temp.png"].iter().collect();
+
+    generate_graph(roots, "temp.png", dimensions)?;
+    show_image("Complex Root Graph", path, dimensions)?;
+    std::fs::remove_file("temp.png")?;
 
     Ok(())
 }
