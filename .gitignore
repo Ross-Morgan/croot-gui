@@ -1,5 +1,6 @@
 /target
-../main.rs
+/src/main.rs
+**/*.png
+**/*.jpg
 
-.png
-.jpg
+!assets/icon.png
