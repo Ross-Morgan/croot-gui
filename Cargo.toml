@@ -1,0 +1,16 @@
+[package]
+name = "croot-gui"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+croot = { git = "https://github.com/Ross-Morgan/croot.git" }
+
+eframe = "0.21.3"
+egui_extras = { version = "0.21.0", features = [ "image" ] }
+image = { version = "0.24", features = ["jpeg", "png"] }
+num-complex = "0.4.3"
+
+plotters = "0.3.4"
