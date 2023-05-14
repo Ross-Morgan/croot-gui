@@ -31,12 +31,37 @@ impl eframe::App for ImageApp {
 }
 
 pub fn show_image(name: &str, path: PathBuf, dimensions: (u32, u32)) -> Result<(), eframe::Error> {
-    let mut options = eframe::NativeOptions {
+
+    let current_path: PathBuf = path!().into();
+    let mut icon_path: PathBuf = current_path.parent().expect("Cannot fail");
+
+    icon_path.push("assets");
+    icon_path.push("icon.png");
+
+    let options = eframe::NativeOptions {
         initial_window_size: Some(egui::vec2(dimensions.0 as f32, dimensions.1 as f32)),
+        icon_data: Some(load_icon(icon_path)),
         ..Default::default()
     };
 
-    options.set_window_icon_from("../assets/icon.png");
-
     eframe::run_native(name, options, Box::new(|_cc| Box::new(ImageApp::new(path))))
+}
+
+fn load_icon(path: PathBuf) -> eframe::IconData {
+    println!("");
+
+    let (icon_rgba, icon_width, icon_height) = {
+        let image = image::open(path)
+            .expect("Failed to open icon path")
+            .into_rgba8();
+        let (width, height) = image.dimensions();
+        let rgba = image.into_raw();
+        (rgba, width, height)
+    };
+
+    eframe::IconData {
+        rgba: icon_rgba,
+        width: icon_width,
+        height: icon_height,
+    }
 }
