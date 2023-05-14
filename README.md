@@ -6,7 +6,7 @@
 
 # Context
 
-This crate is designed to be paired with [`croot`]
+This crate is designed to be paired with `croot`
 
 - [Crate](https://www.crates.io/crates/croot)
 - [Docs](https://www.docs.rs/croot)
