@@ -31,9 +31,10 @@ impl eframe::App for ImageApp {
 }
 
 pub fn show_image(name: &str, path: PathBuf, dimensions: (u32, u32)) -> Result<(), eframe::Error> {
-
-    let current_path: PathBuf = path!().into();
-    let mut icon_path: PathBuf = current_path.parent().expect("Cannot fail");
+    let current_path: PathBuf = file!().into();
+    let mut icon_path: PathBuf = current_path
+        .parent().expect("Cannot fail").to_path_buf()
+        .parent().expect("Cannot fail").to_path_buf();
 
     icon_path.push("assets");
     icon_path.push("icon.png");
