@@ -1,12 +1,17 @@
 [package]
 name = "croot-gui"
+description = ""
 version = "0.1.0"
 edition = "2021"
+license = "BSD-3-Clause"
+repository = "https://www.github.com/Ross-Morgan/croot-gui"
+readme = "README.md"
+keywords = ["complex", "graphing", "plotting", "math", "roots"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-croot = { git = "https://github.com/Ross-Morgan/croot.git" }
+croot = { git = "https://github.com/Ross-Morgan/croot.git", version = "0.3.2" }
 
 eframe = { version = "0.21.3", optional = true }
 egui_extras = { version = "0.21.0", features = [ "image" ], optional = true }
