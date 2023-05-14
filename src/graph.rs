@@ -1,7 +1,11 @@
 use num_complex::Complex64;
 use plotters::prelude::*;
 
-pub fn generate_graph<T: AsRef<std::path::Path> + ?Sized>(roots: Vec<Complex64>, filename: &T, dimensions: (u32, u32)) -> Result<(), Box<dyn std::error::Error>> {
+pub fn generate_graph<T: AsRef<std::path::Path> + ?Sized>(
+    roots: Vec<Complex64>,
+    filename: &T,
+    dimensions: (u32, u32),
+) -> Result<(), Box<dyn std::error::Error>> {
     let draw_area = BitMapBackend::new(filename, dimensions).into_drawing_area();
 
     let radius = roots.first().map(|c| c.norm()).expect("No roots provided");
@@ -11,7 +15,18 @@ pub fn generate_graph<T: AsRef<std::path::Path> + ?Sized>(roots: Vec<Complex64>,
 
     // Create chart
     let mut chart = ChartBuilder::on(&draw_area)
-        .caption(format!("{} roots of {}", roots.len(), roots.first().copied().unwrap_or_default().powi(roots.len() as i32)), ("sans-serif", 50).into_font())
+        .caption(
+            format!(
+                "{} roots of {}",
+                roots.len(),
+                roots
+                    .first()
+                    .copied()
+                    .unwrap_or_default()
+                    .powi(roots.len() as i32)
+            ),
+            ("sans-serif", 50).into_font(),
+        )
         .margin(5)
         .x_label_area_size(30)
         .y_label_area_size(30)
@@ -38,20 +53,25 @@ pub fn generate_graph<T: AsRef<std::path::Path> + ?Sized>(roots: Vec<Complex64>,
 
     // Draw line from origin to each root
     for root in roots.iter() {
-        chart
-            .draw_series(LineSeries::new(
-                (0..=100)
-                    .map(|x| x as f64 / 100.0)
-                    .map(|x| (x * root.re, x * root.im)),
-                BLACK.stroke_width(2),
-            ))?;
+        chart.draw_series(LineSeries::new(
+            (0..=100)
+                .map(|x| x as f64 / 100.0)
+                .map(|x| (x * root.re, x * root.im)),
+            BLACK.stroke_width(2),
+        ))?;
     }
 
     // Draw circles on each root
-    chart.draw_series(roots.iter().map(|c| Circle::new((c.re, c.im), 5, BLACK.filled())))?;
+    chart.draw_series(
+        roots
+            .iter()
+            .map(|c| Circle::new((c.re, c.im), 5, BLACK.filled())),
+    )?;
 
     // Draw circle at origin
-    chart.plotting_area().draw(&Circle::new((0.0, 0.0), 5, BLACK.stroke_width(5).filled()))?;
+    chart
+        .plotting_area()
+        .draw(&Circle::new((0.0, 0.0), 5, BLACK.stroke_width(5).filled()))?;
 
     // Generate graph
     draw_area.present()?;
@@ -60,7 +80,10 @@ pub fn generate_graph<T: AsRef<std::path::Path> + ?Sized>(roots: Vec<Complex64>,
 }
 
 #[cfg(feature = "gui")]
-pub fn show_graph(roots: Vec<Complex64>, dimensions: (u32, u32)) -> Result<(), Box<dyn std::error::Error>> {
+pub fn show_graph(
+    roots: Vec<Complex64>,
+    dimensions: (u32, u32),
+) -> Result<(), Box<dyn std::error::Error>> {
     use std::path::PathBuf;
 
     use crate::app::show_image;
