@@ -29,7 +29,7 @@ let filename = "graph.png";
 let dimensions = (1000, 1000);
 
 // Generate the graph with the selected parameters
-generate_graph(roots, filename, dimensions).expect("Failed);
+generate_graph(roots, filename, dimensions).expect("Failed to generate graph");
 ```
 ## Display Graph
 
@@ -43,5 +43,11 @@ let roots = vec![ ... ];
 let dimensions = (1000, 1000);
 
 // Open a window containing the graph generated from the selected parameters
-show_graph(roots, dimensions).expect("Failed to ");
+show_graph(roots, dimensions).expect("Failed to generator or display graph");
 ```
+
+## Sample Output
+
+This graph was generated from the 5th roots of 32
+
+![argand diagram](./assets/screenshot.png)
