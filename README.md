@@ -48,6 +48,6 @@ show_graph(roots, dimensions).expect("Failed to generator or display graph");
 
 ## Sample Output
 
-This graph was generated from the 5th roots of 32
+This graph was generated from the 5th roots of 32 and is being displayed in 
 
 ![argand diagram](./assets/screenshot.png)
