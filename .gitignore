@@ -4,5 +4,5 @@
 **/*.png
 **/*.jpg
 
-!assets/icon.png
+!assets/*
 /.vscode
