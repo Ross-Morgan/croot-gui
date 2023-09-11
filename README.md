@@ -1,7 +1,7 @@
 # Croot-Gui
 
-![Build](https://img.shields.io/github/actions/workflow/status/Ross-Morgan/croot-gui/rust.yml)
-![Crates.io](https://img.shields.io/crates/v/croot-gui)
+![Build](https://img.shields.io/github/actions/workflow/status/Ross-Morgan/croot-gui/rust.yml?style=for-the-badge)
+![Crates.io](https://img.shields.io/crates/v/croot-gui?style=for-the-badge)
 
 > A Rust crate for graphing complex roots and numbers
 
