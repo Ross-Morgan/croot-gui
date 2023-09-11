@@ -44,7 +44,7 @@ let roots = vec![ ... ];
 let dimensions = (1000, 1000);
 
 // Open a window containing the graph generated from the selected parameters
-show_graph(roots, dimensions).expect("Failed to generator or display graph");
+show_graph(roots, dimensions).expect("Failed to generate or display graph");
 ```
 
 ## Sample Output
