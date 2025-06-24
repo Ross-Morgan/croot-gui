@@ -4,7 +4,7 @@ description = "A Rust crate for graphing complex roots and numbers"
 version = "0.1.0"
 edition = "2021"
 license = "BSD-3-Clause"
-repository = "https://www.github.com/Ross-Morgan/croot-gui"
+repository = "https://github.com/Ross-Morgan/croot-gui"
 readme = "README.md"
 keywords = ["complex", "graphing", "plotting", "math", "roots"]
 
